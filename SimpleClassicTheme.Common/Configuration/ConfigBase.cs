@@ -137,8 +137,7 @@ namespace SimpleClassicTheme.Common.Configuration
                     if (_config.Type == configType)
                     {
                         var eventArgs = new ConfigChangedEventArgs(
-                            configType,
-                            ConfigChangedReason.ExternalApplication);
+                            configType);
 
                         _config.Changed?.Invoke(_config, eventArgs);
 

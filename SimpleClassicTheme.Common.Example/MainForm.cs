@@ -20,7 +20,7 @@ namespace SimpleClassicTheme.Common.Example
 
         private void Config_Changed(object sender, ConfigChangedEventArgs e)
         {
-            MessageBox.Show($"Receive config change: {e.Reason}, {e.Type}");
+            MessageBox.Show($"Receive config change: {e.Type}");
         }
 
         private void CrashButton_Click(object sender, EventArgs e)
