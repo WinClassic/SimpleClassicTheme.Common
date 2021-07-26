@@ -1,2 +1,13 @@
-﻿RegisterWindowMessageW
+﻿// Window messages
 BroadcastSystemMessageW
+RegisterWindowMessageW
+
+// Menu
+AppendMenu
+CreatePopupMenu
+DeleteMenu
+DestroyMenu
+TrackPopupMenu
+TrackPopupMenuEx
+TRACK_POPUP_MENU_FLAGS
+SetMenuItemBitmaps

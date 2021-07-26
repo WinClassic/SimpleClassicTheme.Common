@@ -1,6 +1,8 @@
 ﻿using SimpleClassicTheme.Common.Configuration;
+using SimpleClassicTheme.Common.Native.Controls;
 
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,7 +15,7 @@ namespace SimpleClassicTheme.Common.Example
             InitializeComponent();
         }
 
-        private void BroadcastConfigButton_Click(object sender, EventArgs e)
+        private void broadcastConfigChangeMenuItem_Click(object sender, EventArgs e)
         {
             GlobalConfig.Default.WriteToRegistry();
         }
@@ -23,12 +25,12 @@ namespace SimpleClassicTheme.Common.Example
             MessageBox.Show($"Receive config change: {e.Type}");
         }
 
-        private void CrashButton_Click(object sender, EventArgs e)
+        private void crashMenuItem_Click(object sender, EventArgs e)
         {
-            new Thread(() => throw new Exception("This is a text exception in another thread")).Start();
+            new Thread(() => throw new Exception("This is a test exception in another thread")).Start();
         }
 
-        private void FailButton_Click(object sender, EventArgs e)
+        private void failMenuItem_Click(object sender, EventArgs e)
         {
             throw new Exception("This is a test exception.");
         }
@@ -36,6 +38,37 @@ namespace SimpleClassicTheme.Common.Example
         private void MainForm_Load(object sender, EventArgs e)
         {
             GlobalConfig.Default.Changed += Config_Changed;
+        }
+
+        private void openMenuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SystemPopupMenuItem item = new SystemPopupMenuItem() { Text = "Item", Id = 1 };
+
+            var menu = new SystemPopupMenu()
+            {
+                item,
+                new SystemPopupMenuItem { Text = "Disabled Item", Enabled = false },
+                new SystemPopupMenuItem { Text = "Checked Item", Checked = true },
+                new SystemPopupMenuItem { Image = Properties.Resources.ItemBitmap },
+                new SystemPopupMenuSeparator(),
+                new SystemPopupMenuItem {
+                    Text = "Item with sub menu",
+                    SubMenu = new () { new SystemPopupMenuItem() { Text = "Item 3" } }
+                },
+                new SystemPopupMenuItem() {
+                    Text = "Item in another column",
+                    Break = SystemPopupMenuItemBreak.MenuBarBreak,
+                }
+            };
+
+            item.Click += Item_Click;
+
+            menu.Show(this, 0, 0);
+        }
+
+        private void Item_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click");
         }
     }
 }

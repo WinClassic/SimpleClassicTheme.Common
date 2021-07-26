@@ -29,85 +29,112 @@ namespace SimpleClassicTheme.Common.Example
         /// </summary>
         private void InitializeComponent()
         {
-            this.broadcastConfigButton = new System.Windows.Forms.Button();
-            this.crashButton = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.failButton = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.crashDialogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.failMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crashMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.broadcastConfigChangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemPopupMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // broadcastConfigButton
+            // menuStrip
             // 
-            this.broadcastConfigButton.Location = new System.Drawing.Point(3, 3);
-            this.broadcastConfigButton.Name = "broadcastConfigButton";
-            this.broadcastConfigButton.Size = new System.Drawing.Size(314, 23);
-            this.broadcastConfigButton.TabIndex = 0;
-            this.broadcastConfigButton.Text = "Broadcast global config change";
-            this.broadcastConfigButton.UseVisualStyleBackColor = true;
-            this.broadcastConfigButton.Click += new System.EventHandler(this.BroadcastConfigButton_Click);
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.crashDialogMenuItem,
+            this.configToolStripMenuItem,
+            this.systemPopupMenuToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(320, 24);
+            this.menuStrip.TabIndex = 3;
+            this.menuStrip.Text = "menuStrip1";
             // 
-            // crashButton
+            // crashDialogMenuItem
             // 
-            this.crashButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.crashButton.Location = new System.Drawing.Point(3, 32);
-            this.crashButton.Name = "crashButton";
-            this.crashButton.Size = new System.Drawing.Size(314, 23);
-            this.crashButton.TabIndex = 1;
-            this.crashButton.Text = "Crash";
-            this.crashButton.UseVisualStyleBackColor = true;
-            this.crashButton.Click += new System.EventHandler(this.CrashButton_Click);
+            this.crashDialogMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.failMenuItem,
+            this.crashMenuItem});
+            this.crashDialogMenuItem.Name = "crashDialogMenuItem";
+            this.crashDialogMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.crashDialogMenuItem.Text = "Crash dialog";
             // 
-            // flowLayoutPanel1
+            // failMenuItem
             // 
-            this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel1.Controls.Add(this.broadcastConfigButton);
-            this.flowLayoutPanel1.Controls.Add(this.crashButton);
-            this.flowLayoutPanel1.Controls.Add(this.failButton);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(320, 91);
-            this.flowLayoutPanel1.TabIndex = 2;
+            this.failMenuItem.Name = "failMenuItem";
+            this.failMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.failMenuItem.Text = "Fail";
+            this.failMenuItem.Click += new System.EventHandler(this.failMenuItem_Click);
             // 
-            // failButton
+            // crashMenuItem
             // 
-            this.failButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.failButton.Location = new System.Drawing.Point(3, 61);
-            this.failButton.Name = "failButton";
-            this.failButton.Size = new System.Drawing.Size(314, 23);
-            this.failButton.TabIndex = 2;
-            this.failButton.Text = "Fail";
-            this.failButton.UseVisualStyleBackColor = true;
-            this.failButton.Click += new System.EventHandler(this.FailButton_Click);
+            this.crashMenuItem.Name = "crashMenuItem";
+            this.crashMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.crashMenuItem.Text = "Crash";
+            this.crashMenuItem.Click += new System.EventHandler(this.crashMenuItem_Click);
+            // 
+            // configToolStripMenuItem
+            // 
+            this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.broadcastConfigChangeMenuItem});
+            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.configToolStripMenuItem.Text = "Config";
+            // 
+            // broadcastConfigChangeMenuItem
+            // 
+            this.broadcastConfigChangeMenuItem.Name = "broadcastConfigChangeMenuItem";
+            this.broadcastConfigChangeMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.broadcastConfigChangeMenuItem.Text = "Broadcast config change";
+            this.broadcastConfigChangeMenuItem.Click += new System.EventHandler(this.broadcastConfigChangeMenuItem_Click);
+            // 
+            // systemPopupMenuToolStripMenuItem
+            // 
+            this.systemPopupMenuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openMenuToolStripMenuItem});
+            this.systemPopupMenuToolStripMenuItem.Name = "systemPopupMenuToolStripMenuItem";
+            this.systemPopupMenuToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
+            this.systemPopupMenuToolStripMenuItem.Text = "System popup menu";
+            // 
+            // openMenuToolStripMenuItem
+            // 
+            this.openMenuToolStripMenuItem.Name = "openMenuToolStripMenuItem";
+            this.openMenuToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.openMenuToolStripMenuItem.Text = "Open menu";
+            this.openMenuToolStripMenuItem.Click += new System.EventHandler(this.openMenuToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(320, 91);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(320, 24);
+            this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "SimpleClassicTheme.Common Example";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.flowLayoutPanel1.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button broadcastConfigButton;
-        private System.Windows.Forms.Button crashButton;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button failButton;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem crashDialogMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem failMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem crashMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem broadcastConfigChangeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systemPopupMenuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openMenuToolStripMenuItem;
     }
 }
 
