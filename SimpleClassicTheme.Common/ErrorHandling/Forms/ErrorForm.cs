@@ -31,11 +31,21 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            // NOTE: We can't provide this window's handle
+            //       because we aren't retrieving it in a
+            //       thread-safe way (invoking)
             if (_details.Exception == null)
             {
                 MessageBox.Show(
-                    this,
                     "No report could be sent because the application didn't provide an exception.",
+                    "Report failed to send",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            else if (string.IsNullOrWhiteSpace(_details.SentryDsn))
+            {
+                MessageBox.Show(
+                    "No Sentry DSN was defined therefore no report was sent.",
                     "Report failed to send",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -43,21 +53,13 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
             else
             {
                 ErrorHandler.SubmitError(_details, submitLogCheckBox.Checked);
+                e.Result = true;
             }
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-                MessageBox.Show(
-                    this,
-                    "Report has been sent successfully.",
-                    "Report sent",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-            }
-            else
+            if (e.Error != null)
             {
                 MessageBox.Show(
                     this,
@@ -66,11 +68,17 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
-
-            if (_details.Fatal)
+            else if (e.Result is bool result && result)
             {
-                Close();
+                MessageBox.Show(
+                    this,
+                    "Report has been sent successfully.",
+                    "Report sent",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
+
+            Close();
         }
 
         private void DescriptionLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
