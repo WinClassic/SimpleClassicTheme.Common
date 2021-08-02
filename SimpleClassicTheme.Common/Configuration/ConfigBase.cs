@@ -14,6 +14,26 @@ namespace SimpleClassicTheme.Common.Configuration
     public enum ConfigType
     {
         Global = 0,
+
+        /// <summary>
+        /// Config of SimpleClassicTheme
+        /// </summary>
+        Base = 1,
+
+        /// <summary>
+        /// Config of SimpleClassicThemeTaskbar
+        /// </summary>
+        Taskbar = 2,
+
+        /// <summary>
+        /// Config of SimpleClassicThemeExplorer
+        /// </summary>
+        Explorer = 3,
+
+        /// <summary>
+        /// Config of SimpleClassicThemeControlPanel
+        /// </summary>
+        ControlPanel = 4,
     }
 
     /// <summary>
