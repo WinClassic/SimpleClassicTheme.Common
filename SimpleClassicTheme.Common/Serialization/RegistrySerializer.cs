@@ -95,6 +95,12 @@ namespace SimpleClassicTheme.Common
 
                 RegistryValueKind valueKind = RegistryValueKind.Unknown;
                 object value = property.GetValue(obj);
+
+                if (value is null)
+                {
+                    continue;
+                }
+
                 switch (value)
                 {
                     case bool boolValue:
