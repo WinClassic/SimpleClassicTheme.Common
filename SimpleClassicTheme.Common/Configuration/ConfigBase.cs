@@ -86,12 +86,12 @@ namespace SimpleClassicTheme.Common.Configuration
         /// <param name="registryPath">The registry path where the config data will be stored to. Always prefixed with "HKCU\Software\1337ftw".</param>
         public void ReadFromRegistry(bool ignoreErrors = false)
         {
-            RegistrySerializer.DeserializeFromRegistry(_registryKey, this, ignoreErrors);
+            RegistrySerializer.DeserializeFromRegistry<T>(_registryKey, this as T, ignoreErrors);
         }
 
         public void WriteToRegistry()
         {
-            RegistrySerializer.SerializeToRegistry(_registryKey, this);
+            RegistrySerializer.SerializeToRegistry<T>(_registryKey, this as T);
             BroadcastConfigChange();
         }
 
