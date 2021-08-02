@@ -106,7 +106,7 @@ namespace SimpleClassicTheme.Common
                         break;
 
                     default:
-                        if (value.GetType().IsClass)
+                        if (property.PropertyType.IsClass)
                         {
                             using (var subKey = key.CreateSubKey(property.Name))
                             {
