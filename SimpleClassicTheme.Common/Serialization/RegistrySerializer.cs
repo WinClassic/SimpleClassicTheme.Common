@@ -10,7 +10,7 @@ namespace SimpleClassicTheme.Common
     /// </summary>
     public static class RegistrySerializer
     {
-        private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty;
+        private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
         public static void DeserializeFromRegistry<T>(RegistryKey key, T obj, bool ignoreErrors = true)
         {
@@ -24,7 +24,8 @@ namespace SimpleClassicTheme.Common
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            foreach (var property in typeof(T).GetProperties(bindingFlags))
+            var properties = typeof(T).GetProperties(bindingFlags);
+            foreach (var property in properties)
             {
                 if (!property.CanWrite)
                 {
@@ -78,7 +79,8 @@ namespace SimpleClassicTheme.Common
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            foreach (var property in typeof(T).GetProperties(bindingFlags))
+            var properties = typeof(T).GetProperties(bindingFlags);
+            foreach (var property in properties)
             {
                 if (!property.CanWrite)
                 {
