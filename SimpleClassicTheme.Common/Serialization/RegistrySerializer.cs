@@ -32,37 +32,43 @@ namespace SimpleClassicTheme.Common
                     continue;
                 }
 
-                if (property.PropertyType.IsClass)
-                {
-                    using (var subKey = key.OpenSubKey(property.Name))
-                    {
-                        if (subKey != null)
-                        {
-                            DeserializeFromRegistry(subKey, property.GetValue(obj));
-                        }
-                    }
-                    continue;
-                }
-
-                object value = property.GetValue(obj);
-                var registryValue = key.GetValue(property.Name, value);
-
-                // string → bool
-                if (registryValue is string boolString && property.PropertyType == typeof(bool))
-                {
-                    registryValue = bool.Parse(boolString);
-                }
+                var propertyValue = property.GetValue(obj);
+                var value = key.GetValue(property.Name, propertyValue);
 
                 try
                 {
-                    property.SetValue(obj, registryValue);
-                }
-                catch
-                {
-                    if (!ignoreErrors)
+                    switch (propertyValue)
                     {
-                        throw;
+                        case string:
+                            break;
+
+                        case bool when value is string boolString:
+                            if (bool.TryParse(boolString, out var @bool))
+                            {
+                                value = @bool;
+                            }
+                            break;
+
+                        default:
+                            if (property.PropertyType.IsClass && propertyValue != null)
+                            {
+                                using (var subKey = key.OpenSubKey(property.Name))
+                                {
+                                    if (subKey != null)
+                                    {
+                                        DeserializeFromRegistry(subKey, propertyValue);
+                                    }
+                                }
+
+                                continue;
+                            }
+                            break;
                     }
+
+                    property.SetValue(obj, value);
+                }
+                catch when (ignoreErrors)
+                {
                 }
             }
         }
