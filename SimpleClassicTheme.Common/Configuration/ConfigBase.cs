@@ -46,11 +46,12 @@ namespace SimpleClassicTheme.Common.Configuration
         private static T s_default;
         private readonly RegistryKey _registryKey;
         private ConfigMessageFilter _messageFilter;
+        private const string _registryKeyPrefix = @"Software\1337ftw\";
 
         public ConfigBase(string registryPath, ConfigType type)
         {
             Type = type;
-            _registryKey = Registry.CurrentUser.CreateSubKey(@"Software\1337ftw\" + registryPath);
+            _registryKey = Registry.CurrentUser.CreateSubKey(_registryKeyPrefix + registryPath);
             ReadFromRegistry();
             SubscribeToConfigChanges();
         }
