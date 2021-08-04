@@ -35,7 +35,7 @@ namespace SimpleClassicTheme.Common.Configuration
     public sealed class GlobalConfig : ConfigBase<GlobalConfig>
     {
         [Obsolete("Do not use this constructor, use GlobalConfig.Default instead.", true)]
-        public GlobalConfig() : base("SimpleClassicThemeCommon", ConfigType.Global)
+        public GlobalConfig() : base(@"Simple Classic Theme\Common", ConfigType.Global)
         {
         }
 

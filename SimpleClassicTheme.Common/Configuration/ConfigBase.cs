@@ -90,6 +90,9 @@ namespace SimpleClassicTheme.Common.Configuration
             RegistrySerializer.DeserializeFromRegistry<T>(_registryKey, this as T, ignoreErrors);
         }
 
+        /// <summary>
+        /// Writes all values to the registry and then broadcasts a config change across all subscribed running applications.
+        /// </summary>
         public void WriteToRegistry()
         {
             RegistrySerializer.SerializeToRegistry<T>(_registryKey, this as T);
