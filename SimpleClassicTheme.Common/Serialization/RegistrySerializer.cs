@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 
+using SimpleClassicTheme.Common.Serialization;
+
 using System;
 using System.Reflection;
 
@@ -27,7 +29,7 @@ namespace SimpleClassicTheme.Common
             var properties = typeof(T).GetProperties(bindingFlags);
             foreach (var property in properties)
             {
-                if (!property.CanWrite)
+                if (ShouldIgnoreProperty(property))
                 {
                     continue;
                 }
@@ -88,7 +90,7 @@ namespace SimpleClassicTheme.Common
             var properties = typeof(T).GetProperties(bindingFlags);
             foreach (var property in properties)
             {
-                if (!property.CanWrite)
+                if (ShouldIgnoreProperty(property))
                 {
                     continue;
                 }
@@ -136,6 +138,21 @@ namespace SimpleClassicTheme.Common
 
                 key.SetValue(property.Name, value, valueKind);
             }
+        }
+
+        private static bool ShouldIgnoreProperty(PropertyInfo info)
+        {
+            if (!info.CanRead || !info.CanWrite)
+            {
+                return true;
+            }
+
+            if (info.GetCustomAttribute<RegistryIgnoreAttribute>() is not null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
