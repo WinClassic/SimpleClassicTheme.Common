@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleClassicTheme.Common.Configuration;
+
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
@@ -143,6 +145,12 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
 
         private void SendButton_Click(object sender, EventArgs e)
         {
+            if (dontAskAgainCheckBox.Checked)
+            {
+                GlobalConfig.Default.SentryConsent = SentryConsent.Accepted;
+                GlobalConfig.Default.WriteToRegistry();
+            }
+
             sendButton.Text = "Sending...";
 
             // Disable UI
@@ -157,6 +165,15 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
             using (var detailsForm = new ErrorDetailsForm(_details.Exception))
             {
                 detailsForm.ShowDialog();
+            }
+        }
+
+        private void DontSendButton_Click(object sender, EventArgs e)
+        {
+            if (dontAskAgainCheckBox.Checked)
+            {
+                GlobalConfig.Default.SentryConsent = SentryConsent.Declined;
+                GlobalConfig.Default.WriteToRegistry();
             }
         }
     }
