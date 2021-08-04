@@ -83,11 +83,7 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
 
         private void DescriptionLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show(this,
-                Properties.Resources.ErrorForm_DataCollection,
-                "Data collected",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.None);
+            ErrorHandler.ShowErrorCollectionDetails(this);
         }
 
         private void ErrorForm_FormClosing(object sender, FormClosingEventArgs e)

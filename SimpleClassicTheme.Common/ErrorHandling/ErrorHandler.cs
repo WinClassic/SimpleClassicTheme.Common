@@ -13,6 +13,15 @@ namespace SimpleClassicTheme.Common.ErrorHandling
     {
         public string SentryDsn { get; set; }
 
+        public static void ShowErrorCollectionDetails(IWin32Window owner = null)
+        {
+            MessageBox.Show(owner,
+                Properties.Resources.ErrorForm_DataCollection,
+                "Data collected",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None);
+        }
+
         public void SubscribeToErrorEvents()
         {
             Application.ThreadException += (sender, e) =>
