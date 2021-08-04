@@ -20,6 +20,15 @@ namespace SimpleClassicTheme.Common.Configuration
         Accepted = 2,
     }
 
+    // Integer values are loosely based on https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
+    public enum TargetAppearance
+    {
+        Windows95 = 5,
+        Windows98 = 7,
+        Windows2000 = 9,
+        WindowsXP = 11,
+    }
+
     /// <summary>
     /// Config class that applies to every SimpleClassicTheme application
     /// </summary>
@@ -39,5 +48,10 @@ namespace SimpleClassicTheme.Common.Configuration
         /// Whether to provide log files alongside crash reports in Sentry.
         /// </summary>
         public bool SubmitLogFiles { get; set; } = true;
+
+        /// <summary>
+        /// What OS design should be applied
+        /// </summary>
+        public TargetAppearance TargetAppearance { get; set; } = TargetAppearance.Windows95;
     }
 }
