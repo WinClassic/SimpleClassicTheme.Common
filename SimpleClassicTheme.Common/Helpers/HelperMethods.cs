@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace SimpleClassicTheme.Common.Helpers
 {
@@ -8,10 +9,8 @@ namespace SimpleClassicTheme.Common.Helpers
     {
         public static string? GetApplicationVersion()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var versionAttribute = assembly.GetCustomAttribute<AssemblyVersionAttribute>();
-
-            return versionAttribute?.Version;
+            string? version = Application.ProductVersion.ToString();
+            return version;
         }
     }
 }
