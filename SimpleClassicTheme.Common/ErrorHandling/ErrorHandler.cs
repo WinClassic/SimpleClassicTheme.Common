@@ -147,14 +147,18 @@ namespace SimpleClassicTheme.Common.ErrorHandling
         /// Handles an exception and takes appropiate action.
         /// </summary>
         /// <param name="fatal"><c>true</c> if the exception causes the application to exit or crash; otherwise, <c>false</c> if the application can recover from it.</param>
-        private void HandleException(ErrorDetails details)
+        private void HandleException(ErrorDetails details, bool log = true)
         {
-            Logger.Instance.Log(LoggerVerbosity.Basic, "ErrorHandler", $"An exception of type {details.Exception.GetType().FullName} has occurred.");
-            Logger.Instance.Log(LoggerVerbosity.Detailed, "ErrorHandler", @$"Exception details:
-Message: {details.Exception.Message}
-Exception location: {details.Exception.TargetSite}
-Stack trace:
-{details.Exception.StackTrace}");
+            if (log)
+            {
+                Logger.Instance.Log(LoggerVerbosity.Basic, "ErrorHandler", $"An exception of type {details.Exception.GetType().FullName} has occurred.");
+                Logger.Instance.Log(LoggerVerbosity.Detailed, "ErrorHandler", @$"Exception details:
+    Message: {details.Exception.Message}
+    Exception location: {details.Exception.TargetSite}
+    Stack trace:
+    {details.Exception.StackTrace}");
+            }
+
             Logger.Instance.Dispose();
 
             switch (GlobalConfig.Default.SentryConsent)
@@ -187,13 +191,17 @@ Stack trace:
         {
             category ??= "ErrorHandler";
 
-            Logger.Instance.Log(LoggerVerbosity.Basic, "ErrorHandler", $"An exception of type {details.Exception.GetType().FullName} has occurred.");
-            Logger.Instance.Log(LoggerVerbosity.Detailed, "ErrorHandler", @$"Exception details:
-Message: {details.Exception.Message}
-Exception location: {details.Exception.TargetSite}
-Stack trace:
-{details.Exception.StackTrace}");
+            Logger.Instance.Log(LoggerVerbosity.Basic, category, $"An exception of type {exception.GetType().FullName} has occurred.");
+            Logger.Instance.Log(LoggerVerbosity.Detailed, category, $"Exception details:\n{exception}");
             Logger.Instance.Dispose();
+
+            // TODO: make the other method use severity enum and pass that to sentry
+            HandleException(new ErrorDetails()
+            {
+                Exception = exception,
+                Fatal = severity == ExceptionSeverity.Fatal,
+                Handler = this
+            }, false);
         }
 
         public void Dispose()
