@@ -32,6 +32,8 @@ namespace SimpleClassicTheme.Common.Performance
 
                     Debugger.Times.Add(region);
                 }
+
+                GC.SuppressFinalize(this);
             }
         }
     }

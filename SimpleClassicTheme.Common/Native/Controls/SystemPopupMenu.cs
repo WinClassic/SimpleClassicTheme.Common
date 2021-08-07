@@ -11,10 +11,11 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace SimpleClassicTheme.Common.Native.Controls
 {
-    public class SystemPopupMenu : IList<SystemPopupItem>
+    public class SystemPopupMenu : IDisposable, IList<SystemPopupItem>
     {
         private readonly HMENU _hMenu;
-        private readonly List<SystemPopupItem> _items;
+        private List<SystemPopupItem> _items;
+        private bool _disposed;
 
         public SystemPopupMenu()
         {
@@ -24,7 +25,7 @@ namespace SimpleClassicTheme.Common.Native.Controls
 
         ~SystemPopupMenu()
         {
-            PInvoke.DestroyMenu(_hMenu);
+            Dispose(disposing: false);
         }
 
         public int Count => throw new NotImplementedException();
@@ -154,6 +155,26 @@ namespace SimpleClassicTheme.Common.Native.Controls
             }
 
             return null;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _items = null;
+                }
+
+                PInvoke.DestroyMenu(_hMenu);
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

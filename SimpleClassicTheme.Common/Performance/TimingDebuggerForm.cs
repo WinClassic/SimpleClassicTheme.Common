@@ -89,10 +89,11 @@ namespace SimpleClassicTheme.Common.Performance
         private void ListView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             var region = debugger.Times[e.ItemIndex];
-            var items = new List<string>();
-
-            items.Add(region.Timestamp.ToString());
-            items.Add(region.Duration.ToString());
+            var items = new List<string>
+            {
+                region.Timestamp.ToString(),
+                region.Duration.ToString()
+            };
 
             if (percentageCheckBox.Checked)
                 items.Add($"{Math.Round(region.Duration / debugger.StopTime * 100d, 2)}%");

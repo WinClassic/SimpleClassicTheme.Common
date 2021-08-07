@@ -68,12 +68,26 @@ namespace SimpleClassicTheme.Common.Logging
         public void Dispose()
         {
             Log(LoggerVerbosity.Basic, "Logger", "Shutting down logger");
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            _streamWriter?.Dispose();
-            _fileStream?.Dispose();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_streamWriter != null)
+                {
+                    _streamWriter.Dispose();
+                    _streamWriter = null;
+                }
 
-            _streamWriter = null;
-            _fileStream = null;
+                if (_fileStream != null)
+                {
+                    _fileStream.Dispose();
+                    _fileStream = null;
+                }
+            }
         }
 
         public void Initialize(LoggerVerbosity verbosity)
