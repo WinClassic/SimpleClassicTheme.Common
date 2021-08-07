@@ -9,7 +9,9 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Threading;
 
 namespace SimpleClassicTheme.Common.ErrorHandling
 {
@@ -78,7 +80,17 @@ namespace SimpleClassicTheme.Common.ErrorHandling
                     o.MaxBreadcrumbs = 50;
                     o.StackTraceMode = StackTraceMode.Enhanced;
                     o.AutoSessionTracking = GlobalConfig.Default.EnableSessionTracking;
-                    
+                    o.BeforeSend += (SentryEvent e) => {
+                        var process = Process.GetCurrentProcess();
+
+                        e.SetExtra("gdi-handles", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS));
+                        e.SetExtra("gdi-handles-peak", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS_PEAK));
+                        e.SetExtra("user-handles", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS));
+                        e.SetExtra("user-handles-peak", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS_PEAK));
+
+                        return e;
+                    };
+
                     if (!string.IsNullOrWhiteSpace(SentryProjectName) &&
                         HelperMethods.GetApplicationVersion() is string appVersion)
                     {
