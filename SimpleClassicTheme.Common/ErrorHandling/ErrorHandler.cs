@@ -82,11 +82,12 @@ namespace SimpleClassicTheme.Common.ErrorHandling
                     o.AutoSessionTracking = GlobalConfig.Default.EnableSessionTracking;
                     o.BeforeSend += (SentryEvent e) => {
                         var process = Process.GetCurrentProcess();
+                        var handle = (HANDLE)process.Handle;
 
-                        e.SetExtra("gdi-handles", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS));
-                        e.SetExtra("gdi-handles-peak", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS_PEAK));
-                        e.SetExtra("user-handles", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS));
-                        e.SetExtra("user-handles-peak", PInvoke.GetGuiResources((HANDLE)process.Handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS_PEAK));
+                        e.SetExtra("gdi-handles", PInvoke.GetGuiResources(handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS));
+                        e.SetExtra("gdi-handles-peak", PInvoke.GetGuiResources(handle, GET_GUI_RESOURCES_FLAGS.GR_GDIOBJECTS_PEAK));
+                        e.SetExtra("user-handles", PInvoke.GetGuiResources(handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS));
+                        e.SetExtra("user-handles-peak", PInvoke.GetGuiResources(handle, GET_GUI_RESOURCES_FLAGS.GR_USEROBJECTS_PEAK));
 
                         return e;
                     };
