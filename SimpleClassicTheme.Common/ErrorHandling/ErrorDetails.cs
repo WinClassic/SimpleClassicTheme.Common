@@ -8,6 +8,6 @@ namespace SimpleClassicTheme.Common.ErrorHandling
 
         public bool Fatal { get; init; }
 
-        public string SentryDsn { get; init; }
+        public ErrorHandler Handler { get; init; }
     }
 }

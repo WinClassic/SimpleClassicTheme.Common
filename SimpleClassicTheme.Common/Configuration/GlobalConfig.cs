@@ -43,11 +43,18 @@ namespace SimpleClassicTheme.Common.Configuration
         /// User's consent preferences towards Sentry reports
         /// </summary>
         public SentryConsent SentryConsent { get; set; } = SentryConsent.Ask;
+        
+        public SentryConsent EnableSentry { get; set; } = SentryConsent.Ask;
 
         /// <summary>
         /// Whether to provide log files alongside crash reports in Sentry.
         /// </summary>
         public bool SubmitLogFiles { get; set; } = true;
+
+        /// <summary>
+        /// https://docs.sentry.io/platforms/dotnet/configuration/releases/#release-health
+        /// </summary>
+        public bool EnableSessionTracking { get; set; } = false;
 
         /// <summary>
         /// What OS design should be applied

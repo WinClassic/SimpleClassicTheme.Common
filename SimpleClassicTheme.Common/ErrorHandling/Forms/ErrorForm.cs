@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+
 namespace SimpleClassicTheme.Common.ErrorHandling.Forms
 {
     public partial class ErrorForm : Form
@@ -25,7 +27,7 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
         {
             get
             {
-                var assembly = Assembly.GetExecutingAssembly();
+                var assembly = Assembly.GetEntryAssembly();
                 var attribute = assembly.GetCustomAttribute<AssemblyProductAttribute>();
                 return attribute.Product;
             }
@@ -43,20 +45,32 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
                     "Report failed to send",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+
+                return;
             }
-            else if (string.IsNullOrWhiteSpace(_details.SentryDsn))
+            else if (_details.Handler.IsSentryAvailable)
             {
-                MessageBox.Show(
-                    "No Sentry DSN was defined therefore no report was sent.",
-                    "Report failed to send",
-                    MessageBoxButtons.OK,
+                var result = MessageBox.Show(
+                    "You have Sentry disabled, you must enable it to submit the crash report. Would you like to enable it?",
+                    "Sentry disabled",
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    GlobalConfig.Default.EnableSentry = SentryConsent.Accepted;
+                    GlobalConfig.Default.WriteToRegistry();
+                }
+                else
+                {
+                    return;
+                }
             }
-            else
-            {
-                ErrorHandler.SubmitError(_details, submitLogCheckBox.Checked);
-                e.Result = true;
-            }
+
+            _details.Handler.SubmitError(_details, submitLogCheckBox.Checked);
+            _details.Handler.Dispose();
+
+            e.Result = true;
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -105,6 +119,8 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
             iconPictureBox.Image = _details.Fatal
                 ? Properties.Resources.CrashIcon
                 : Properties.Resources.ProblemIcon;
+
+            sendButton.Enabled = !string.IsNullOrWhiteSpace(_details.Handler.SentryDsn);
 
             LoadStrings();
         }
