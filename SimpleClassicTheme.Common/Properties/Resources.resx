@@ -134,28 +134,6 @@
   <data name="ErrorForm_Crash_Title" xml:space="preserve">
     <value>{0} crashed</value>
   </data>
-  <data name="ErrorForm_DataCollection" xml:space="preserve">
-    <value>The currently known data collected by error reports sent in debug builds is:
-
-• Current application log
-    • OS version
-    • SCT and application version
-    • Depending on the problem, this might also include information about open windows
-
-• Stack trace (information about where the program crashed)
-
-• System Environment
-    • OS version (e.g. Microsoft Windows 10.0.22000)
-    • .NET runtime version
-    • SCT application version
-    • Sentry SDK version (SDK version of the error reporting library)
-    • Loaded assemblies (i.e. libraries)
-
-• Locale information
-    • Calendar type
-    • Timezone
-    • Locale name (e.g. English, en-US)</value>
-  </data>
   <data name="ErrorForm_Problem_Description" xml:space="preserve">
     <value>{0} encountered an internal error. If you like to help us fix it, click on Send to submit an error report over Sentry. To learn more about the data collected click here.</value>
   </data>

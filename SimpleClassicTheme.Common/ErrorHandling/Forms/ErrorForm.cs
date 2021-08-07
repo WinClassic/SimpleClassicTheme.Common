@@ -85,7 +85,7 @@ namespace SimpleClassicTheme.Common.ErrorHandling.Forms
 
         private void DescriptionLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ErrorHandler.ShowErrorCollectionDetails(this);
+            ErrorHandler.ShowErrorCollectionDetails();
         }
 
         private void ErrorForm_FormClosing(object sender, FormClosingEventArgs e)

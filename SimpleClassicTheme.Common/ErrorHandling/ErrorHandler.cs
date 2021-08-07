@@ -13,13 +13,10 @@ namespace SimpleClassicTheme.Common.ErrorHandling
     {
         public string SentryDsn { get; set; }
 
-        public static void ShowErrorCollectionDetails(IWin32Window owner = null)
+        public static void ShowErrorCollectionDetails()
         {
-            MessageBox.Show(owner,
-                Properties.Resources.ErrorForm_DataCollection,
-                "Data collected",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.None);
+            const string url = "https://github.com/WinClassic/SimpleClassicTheme.Common/wiki/Sentry-integration";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
 
         public void SubscribeToErrorEvents()

@@ -19,7 +19,7 @@ namespace SimpleClassicTheme.Common.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -103,28 +103,6 @@ namespace SimpleClassicTheme.Common.Properties {
         internal static string ErrorForm_Crash_Title {
             get {
                 return ResourceManager.GetString("ErrorForm_Crash_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The currently known data collected by error reports sent in debug builds is:
-        ///
-        ///• Current application log
-        ///    • OS version
-        ///    • SCT and application version
-        ///    • Depending on the problem, this might also include information about open windows
-        ///
-        ///• Stack trace (information about where the program crashed)
-        ///
-        ///• System Environment
-        ///    • OS version (e.g. Microsoft Windows 10.0.22000)
-        ///    • .NET runtime version
-        ///    • SCT application version
-        ///    • Sentry SDK version (SDK version of the error reporting lib [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string ErrorForm_DataCollection {
-            get {
-                return ResourceManager.GetString("ErrorForm_DataCollection", resourceCulture);
             }
         }
         
