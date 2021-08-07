@@ -112,6 +112,13 @@ namespace SimpleClassicTheme.Common.Logging
             }
         }
 
+        public void LogException(LoggerVerbosity verbosity, string source, string text, Exception exception)
+        {
+            text += Environment.NewLine + exception.ToString();
+
+            Log(verbosity, source, text);
+        }
+
         private void DumpSystemInformation()
         {
             Log(LoggerVerbosity.Detailed, "SystemDump", "Performing quick system dump");

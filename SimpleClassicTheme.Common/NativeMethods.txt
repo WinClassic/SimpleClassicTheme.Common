@@ -11,3 +11,6 @@ TrackPopupMenu
 TrackPopupMenuEx
 TRACK_POPUP_MENU_FLAGS
 SetMenuItemBitmaps
+
+// Kernel32
+ReadProcessMemory
