@@ -15,9 +15,11 @@ namespace SimpleClassicTheme.Common.Native
     /// </summary>
     public static class NativeHelpers
     {
-        public static T ReadProcessMemoryStructure<T>(IntPtr process, IntPtr index, int length) where T : struct
+        public static T ReadProcessMemoryStructure<T>(IntPtr process, IntPtr baseAddress, int? length = null) where T : struct
         {
-            var bytes = ReadProcessMemory(process, index, length);
+            length ??= Marshal.SizeOf<T>();
+
+            var bytes = ReadProcessMemory(process, baseAddress, length.Value);
 
             GCHandle gcHandle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             T structure = Marshal.PtrToStructure<T>(gcHandle.AddrOfPinnedObject());
