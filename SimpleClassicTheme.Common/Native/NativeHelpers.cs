@@ -15,6 +15,14 @@ namespace SimpleClassicTheme.Common.Native
     /// </summary>
     public static class NativeHelpers
     {
+        /// <summary>
+        /// Reads a block of memory from the specified <paramref name="process"/> starting at <paramref name="baseAddress"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="process"></param>
+        /// <param name="baseAddress"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static T ReadProcessMemoryStructure<T>(IntPtr process, IntPtr baseAddress, int? length = null) where T : struct
         {
             length ??= Marshal.SizeOf<T>();

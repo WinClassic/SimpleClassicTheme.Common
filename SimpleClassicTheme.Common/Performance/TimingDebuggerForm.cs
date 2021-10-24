@@ -20,7 +20,7 @@ namespace SimpleClassicTheme.Common.Performance
             this.debugger = debugger;
         }
 
-        private int StepSize => (int)(debugger.StopTime.TotalMilliseconds / 10);
+        private int StepSize => Math.Max(1, (int)(debugger.StopTime.TotalMilliseconds / 10));
 
         public static Color ColorFromHSL(double h, double s, double l)
         {
