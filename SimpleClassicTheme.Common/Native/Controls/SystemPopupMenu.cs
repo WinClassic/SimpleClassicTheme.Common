@@ -1,13 +1,15 @@
-﻿using SimpleClassicTheme.Common.Native.Methods;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
+
+using static SimpleClassicTheme.Common.Native.Methods.User32;
 
 namespace SimpleClassicTheme.Common.Native.Controls
 {
@@ -28,8 +30,8 @@ namespace SimpleClassicTheme.Common.Native.Controls
             Dispose(disposing: false);
         }
 
-        public int Count => throw new NotImplementedException();
-        public bool IsReadOnly => throw new NotImplementedException();
+        public int Count => _items.Count;
+        public bool IsReadOnly => false;
 
         public SystemPopupItem this[int index]
         {
@@ -39,18 +41,26 @@ namespace SimpleClassicTheme.Common.Native.Controls
 
         public void Add(SystemPopupItem item)
         {
-            SystemPopupMenu subMenu = null;
-
-            if (item is SystemPopupMenuItem menuItem)
+            if (!item.Visible)
             {
-                subMenu = menuItem.SubMenu;
+                return;
             }
 
-            PInvoke.AppendMenu(
+            if (!item.Id.HasValue)
+            {
+                item.Id = NextId;
+            }
+
+            bool result = PInvoke.AppendMenu(
                 _hMenu,
                 item.NativeFlags,
-                (nuint)(subMenu?._hMenu.Value ?? (IntPtr)item.Id).ToInt32(),
+                (nuint)item.Id,
                 item.NativeHandle);
+
+            if (!result)
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
 
             _items.Add(item);
         }
@@ -104,18 +114,20 @@ namespace SimpleClassicTheme.Common.Native.Controls
 
         public void Show(IWin32Window owner, int x, int y)
         {
-            var hWnd = (HWND)owner.Handle;
-            var flags = TRACK_POPUP_MENU_FLAGS.TPM_RETURNCMD;
+            TRACK_POPUP_MENU_FLAGS flags =
+                TRACK_POPUP_MENU_FLAGS.TPM_RETURNCMD |
+                TRACK_POPUP_MENU_FLAGS.TPM_NONOTIFY;
+            
             int id;
 
             unsafe
             {
-                id = User32.TrackPopupMenuEx(
+                id = TrackPopupMenuEx(
                     _hMenu,
-                    flags,
+                    (uint)flags,
                     x,
                     y,
-                    hWnd,
+                    owner.Handle,
                     IntPtr.Zero);
             }
 
@@ -123,6 +135,7 @@ namespace SimpleClassicTheme.Common.Native.Controls
             // or if an error occurs, the return value is zero.
             if (id == 0)
             {
+                var errorCode = Marshal.GetLastWin32Error();
                 return;
             }
 
@@ -130,6 +143,24 @@ namespace SimpleClassicTheme.Common.Native.Controls
             if (item is SystemPopupMenuItem menuItem)
             {
                 menuItem.OnClick();
+            }
+        }
+
+        public int NextId
+        {
+            get
+            {
+                int itemCount = Count;
+
+                foreach (var item in this)
+                {
+                    if (item is SystemPopupMenuItem menuItem && menuItem.SubMenu is SystemPopupMenu subMenu)
+                    {
+                        itemCount += subMenu.NextId;
+                    }
+                }
+
+                return itemCount;
             }
         }
 

@@ -9,6 +9,16 @@ namespace SimpleClassicTheme.Common.Native.Controls
 {
     public class SystemPopupMenuItem : SystemPopupItem
     {
+        public SystemPopupMenuItem()
+        {
+        }
+
+        public SystemPopupMenuItem(string text, EventHandler<EventArgs> onClick)
+        {
+            Text = text;
+            Click += onClick;
+        }
+
         public event EventHandler<EventArgs> Click;
 
         public bool Checked { get; set; }
@@ -18,6 +28,7 @@ namespace SimpleClassicTheme.Common.Native.Controls
         public Image Image { get; set; }
 
         public SystemPopupMenu SubMenu { get; set; }
+
         public string Text { get; set; }
 
         public SystemPopupMenuItemBreak Break { get; set; } = SystemPopupMenuItemBreak.None;

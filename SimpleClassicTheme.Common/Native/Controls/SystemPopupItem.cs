@@ -5,8 +5,12 @@ namespace SimpleClassicTheme.Common.Native.Controls
 {
     public abstract class SystemPopupItem
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
+
         abstract internal MENU_ITEM_FLAGS NativeFlags { get; }
+
         abstract internal PCWSTR NativeHandle { get; }
+
+        public bool Visible { get; init; } = true;
     }
 }
